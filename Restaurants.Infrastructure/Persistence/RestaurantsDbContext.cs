@@ -4,7 +4,7 @@ using Restaurants.Infrastructure.Persistence.Configurations;
 
 namespace Restaurants.Infrastructure.Persistence;
 
-public class RestaurantsDbContext : DbContext
+public class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> options) : DbContext(options)
 {
     internal DbSet<Restaurant> Restaurants { get; set; }
     internal DbSet<Dish> Dishes { get; set; }
@@ -17,11 +17,4 @@ public class RestaurantsDbContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer(
-            "Server=.\\SQLEXPRESS;Database=Restaurants;Trusted_Connection=True;TrustServerCertificate=True;");
-
-        base.OnConfiguring(optionsBuilder);
-    }
 }
