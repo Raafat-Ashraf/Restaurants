@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Restaurants.Application.Restaurants;
 
@@ -7,6 +8,9 @@ public static class ServiceCollectionExtension
 {
     public static void AddApplicationServices(this IServiceCollection services)
     {
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
         services.AddScoped<IRestaurantsService, RestaurantsService>();
+
     }
 }
