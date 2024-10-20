@@ -12,4 +12,9 @@ public class RestaurantsRepository(RestaurantsDbContext context) : IRestaurantsR
 
     public async Task<IEnumerable<Restaurant>> GetAllAsync()
         => await _context.Restaurants.Include(x => x.Dishes).AsNoTracking().ToListAsync();
+
+    public Task<Restaurant?> GetByIdAsync(int id)
+    {
+        return _context.Restaurants.Include(x => x.Dishes).FirstOrDefaultAsync(x => x.Id == id);
+    }
 }
