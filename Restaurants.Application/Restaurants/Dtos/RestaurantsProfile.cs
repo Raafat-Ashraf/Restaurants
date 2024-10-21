@@ -7,6 +7,14 @@ public class RestaurantsProfile : Profile
 {
     public RestaurantsProfile()
     {
+        CreateMap<CreateRestaurantDto, Restaurant>()
+            .ForMember(src => src.Address, opt => opt.MapFrom(dest => new Address()
+            {
+                City = dest.City,
+                Street = dest.Street,
+                PostalCode = dest.PostalCode
+            }));
+
         CreateMap<Restaurant, RestaurantDto>()
             .ForMember(dest => dest.City, opt => opt
                 .MapFrom(src => src.Address == null ? null : src.Address!.City))
@@ -14,7 +22,5 @@ public class RestaurantsProfile : Profile
                 .MapFrom(src => src.Address == null ? null : src.Address!.Street))
             .ForMember(dest => dest.PostalCode, opt => opt
                 .MapFrom(src => src.Address == null ? null : src.Address!.PostalCode));
-
-
     }
 }
