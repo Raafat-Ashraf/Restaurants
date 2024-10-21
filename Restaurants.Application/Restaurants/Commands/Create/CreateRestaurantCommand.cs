@@ -1,8 +1,8 @@
-using System.Reflection.Metadata.Ecma335;
+using MediatR;
 
-namespace Restaurants.Application.Restaurants.Dtos;
+namespace Restaurants.Application.Restaurants.Commands.Create;
 
-public class CreateRestaurantDto
+public class CreateRestaurantCommand : IRequest<int>
 {
     public string Name { get; set; } = null!;
     public string Description { get; set; } = null!;

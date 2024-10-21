@@ -14,9 +14,9 @@ public static class ServiceCollectionExtension
 
         services.AddAutoMapper(applicationAssembly);
 
-        services.AddScoped<IRestaurantsService, RestaurantsService>();
-
         services.AddValidatorsFromAssembly(applicationAssembly)
             .AddFluentValidationAutoValidation();
+
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
     }
 }
