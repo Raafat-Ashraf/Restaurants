@@ -35,4 +35,11 @@ public class RestaurantsRepository(RestaurantsDbContext context) : IRestaurantsR
 
         return await _context.SaveChangesAsync() > 0;
     }
+
+    public bool UpdateAsync(Restaurant mapped)
+    {
+        _context.Restaurants.Update(mapped);
+
+        return _context.SaveChanges() > 0;
+    }
 }
