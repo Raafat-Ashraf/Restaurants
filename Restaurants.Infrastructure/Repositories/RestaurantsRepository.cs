@@ -25,4 +25,14 @@ public class RestaurantsRepository(RestaurantsDbContext context) : IRestaurantsR
 
         return restaurant.Id;
     }
+
+    public async Task<bool> DeleteAsync(Restaurant? restaurant)
+    {
+        if (restaurant is null)
+            return false;
+
+        _context.Restaurants.Remove(restaurant);
+
+        return await _context.SaveChangesAsync() > 0;
+    }
 }
