@@ -21,4 +21,10 @@ public class DishRepository(RestaurantsDbContext context) : IDishRepository
 
         return dish;
     }
+
+    public async Task DeleteAsync(Dish dish)
+    {
+        context.Remove(dish);
+        await context.SaveChangesAsync();
+    }
 }
