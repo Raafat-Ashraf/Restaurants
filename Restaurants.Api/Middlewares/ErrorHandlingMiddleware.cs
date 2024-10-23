@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Restaurants.Domain.Exceptions;
 
 namespace Restaurants.Api.Middlewares;
@@ -13,8 +14,16 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
         catch (NotFoundException notFoundException)
         {
             logger.LogWarning(notFoundException, notFoundException.Message);
-            context.Response.StatusCode = StatusCodes.Status404NotFound;
-            await context.Response.WriteAsync(notFoundException.Message);
+
+            var problem = new CustomProblemDetails
+            {
+                Title = nameof(NotFound),
+                Status = StatusCodes.Status404NotFound,
+                Detail = notFoundException.Message,
+                Type = nameof(NotFoundException)
+            };
+
+            await context.Response.WriteAsJsonAsync(problem);
         }
         catch (Exception e)
         {
